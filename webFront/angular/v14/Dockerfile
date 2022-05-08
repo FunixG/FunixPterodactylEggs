@@ -3,6 +3,7 @@ FROM node:14
 MAINTAINER Antoine PRONNIER, <antoine.pronnier@gmail.com>
 
 RUN adduser --disabled-password --home /home/container container
+RUN npm install -g @angular/cli
 
 USER container
 ENV USER=container HOME=/home/container
