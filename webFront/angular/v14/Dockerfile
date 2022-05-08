@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:14
 
 MAINTAINER Antoine PRONNIER, <antoine.pronnier@gmail.com>
 
