@@ -1,0 +1,242 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2022-06-06T00:48:32+02:00",
+    "name": "Spring app - FunixAPI",
+    "author": "funixgaming7@gmail.com",
+    "description": "Pterodactyl egg used to run Spring app for the FunixGaming API",
+    "features": null,
+    "docker_images": {
+        "Java 17": "ghcr.io\/pterodactyl\/yolks:java_17"
+    },
+    "file_denylist": [],
+    "startup": "java -jar server.jar -Xms350M -Xmx{{SERVER_MEMORY}}M -Dfile.encoding=UTF-8",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"Started FunixApiApp\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "cd \/mnt\/server\r\n\r\necho -e \"installing dependencies\"\r\napt-get -y update\r\napt-get -y install curl\r\n\r\necho \"T\u00e9l\u00e9chargement de la FunixAPI V\"${API_VERSION}\r\n\r\ncurl https:\/\/repo1.maven.org\/maven2\/fr\/funixgaming\/api\/server\/funix-api-server\/${API_VERSION}\/funix-api-server-${API_VERSION}.jar -o server.jar",
+            "container": "debian:stretch",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Database Host",
+            "description": "",
+            "env_variable": "DB_HOSTNAME",
+            "default_value": "172.18.0.1",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        },
+        {
+            "name": "Database Port",
+            "description": "",
+            "env_variable": "DB_PORT",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Nom de la BDD",
+            "description": "",
+            "env_variable": "DB_DATABASE",
+            "default_value": "funix_api_db",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Nom utilisateur BDD",
+            "description": "",
+            "env_variable": "DB_USER",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Password BDD",
+            "description": "",
+            "env_variable": "DB_PASSWORD",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Mail Host",
+            "description": "",
+            "env_variable": "MAIL_HOST",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Mail Port",
+            "description": "",
+            "env_variable": "MAIL_PORT",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        },
+        {
+            "name": "Mail User",
+            "description": "",
+            "env_variable": "MAIL_USER",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Mail Password",
+            "description": "",
+            "env_variable": "MAIL_USER_PASSWORD",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Spring web port",
+            "description": "",
+            "env_variable": "APP_PORT",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Google captche site key",
+            "description": "",
+            "env_variable": "GOOGLE_RECAPTCHA_SITE",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        },
+        {
+            "name": "Google captcha secret key",
+            "description": "",
+            "env_variable": "GOOGLE_RECAPTCHA_SECRET",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Mail de l'api",
+            "description": "Adresse email de l'admin.",
+            "env_variable": "API_EMAIL",
+            "default_value": "admin@funixgaming.fr",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|email|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Nombre de chiffres dans le mot de passe",
+            "description": "Nombre de chiffres dans le g\u00e9n\u00e9ration de password",
+            "env_variable": "PASSWORD_NUMBERS",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer|max:20",
+            "field_type": "text"
+        },
+        {
+            "name": "Nombre de chars sp\u00e9ciaux password gen",
+            "description": "",
+            "env_variable": "PASSWORD_SPECIALS",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Nombre de CAPS dans password gen",
+            "description": "",
+            "env_variable": "PASSWORD_CAPS",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Nombre de lowercase dans password gen",
+            "description": "",
+            "env_variable": "PASSWORD_MIN",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer|max:20",
+            "field_type": "text"
+        },
+        {
+            "name": "API WHITELIST",
+            "description": "Example: 127.0.0.1,8.8.8.8,1.2.3.4",
+            "env_variable": "API_WHITELIST",
+            "default_value": "172.18.0.1,116.203.141.251",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Paypal client id",
+            "description": "",
+            "env_variable": "PAYPAL_CLIENT_ID",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:150",
+            "field_type": "text"
+        },
+        {
+            "name": "Paypal client secret",
+            "description": "",
+            "env_variable": "PAYPAL_CLIENT_SECRET",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:150",
+            "field_type": "text"
+        },
+        {
+            "name": "Version de l'api",
+            "description": "",
+            "env_variable": "API_VERSION",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        }
+    ]
+}
