@@ -1,0 +1,122 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2022-06-06T14:20:26+02:00",
+    "name": "Spring App - FunixBot Twitch",
+    "author": "funixgaming7@gmail.com",
+    "description": "Pterodactyl egg used to run FunixBot Twitch",
+    "features": null,
+    "docker_images": {
+        "Java 17": "ghcr.io\/pterodactyl\/yolks:java_17"
+    },
+    "file_denylist": [],
+    "startup": "java -jar bot.jar -Xms150M -Xmx{{SERVER_MEMORY}}M -Dfile.encoding=UTF-8",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"Started FunixBotTwitchApp\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "cd \/mnt\/server\r\n\r\necho -e \"installing dependencies\"\r\napt-get -y update\r\napt-get -y install curl\r\n\r\necho \"T\u00e9l\u00e9chargement de la FunixBot Twitch V\"${BOT_VERSION}\r\n\r\ncurl https:\/\/repo1.maven.org\/maven2\/fr\/funixgaming\/funixbot\/twitch\/funix-bot-twitch\/${BOT_VERSION}\/funix-bot-twitch-${BOT_VERSION}.jar -o bot.jar",
+            "container": "debian:stretch",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Api username",
+            "description": "Username used to auth to funix api",
+            "env_variable": "API_USERNAME",
+            "default_value": "api",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        },
+        {
+            "name": "Api password",
+            "description": "Password to access api funix",
+            "env_variable": "API_PASSWORD",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        },
+        {
+            "name": "Bot username",
+            "description": "Bot username on twitch",
+            "env_variable": "BOT_USERNAME",
+            "default_value": "funixbot",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Streamer username",
+            "description": "The streamer username to connect on",
+            "env_variable": "STREAMER_USERNAME",
+            "default_value": "funixgaming",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "Twitch client id",
+            "description": "Twitch client id app",
+            "env_variable": "TWITCH_CLIENT_ID",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        },
+        {
+            "name": "Twitch client secret",
+            "description": "",
+            "env_variable": "TWITCH_CLIENT_SECRET",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        },
+        {
+            "name": "Twitch redirect url",
+            "description": "",
+            "env_variable": "TWITCH_REDIRECT_URL",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        },
+        {
+            "name": "Twitch Oauth code",
+            "description": "",
+            "env_variable": "TWITCH_OAUTH_CODE",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        },
+        {
+            "name": "Bot Version",
+            "description": "Bot version on maven\r\nhttps:\/\/github.com\/FunixProductions\/FunixBot",
+            "env_variable": "BOT_VERSION",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:50",
+            "field_type": "text"
+        }
+    ]
+}
