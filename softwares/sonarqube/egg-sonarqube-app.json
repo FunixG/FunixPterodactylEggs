@@ -1,0 +1,82 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2022-09-17T17:34:54+02:00",
+    "name": "Sonarqube app",
+    "author": "contact@funixgaming.fr",
+    "description": "https:\/\/www.sonarqube.org\/",
+    "features": null,
+    "docker_images": {
+        "funixg\/pterodactyl-java:11": "funixg\/pterodactyl-java:11"
+    },
+    "file_denylist": [],
+    "startup": ".\/sonarqube\/bin\/linux-x86-64\/sonar.sh console",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"SonarQube is up\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# MariaDB Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n\r\necho -e \"installing dependencies\"\r\napt-get -y update\r\napt-get install -y wget unzip\r\n\r\n## add user\r\necho -e \"adding container user\"\r\nuseradd -d \/home\/container -m container -s \/bin\/bash\r\n\r\n## own server to container user\r\nchown container: \/mnt\/server\/\r\n\r\ncd \/mnt\/server\r\n\r\nif [ -d \"sonarqube\" ]; then\r\n    rm -rf sonarqube\r\nfi\r\n\r\nwget https:\/\/binaries.sonarsource.com\/Distribution\/sonarqube\/sonarqube-8.9.9.56886.zip && unzip sonarqube-*.zip\r\nmv sonarqube-*\/ sonarqube\r\nrm sonarqube-*.zip\r\n\r\nrm -rf sonarqube\/conf\/sonar.properties\r\n\r\necho \"sonar.jdbc.username=${DB_USERNAME}\" >> sonarqube\/conf\/sonar.properties\r\necho \"sonar.jdbc.password=${DB_PASSWORD}\" >> sonarqube\/conf\/sonar.properties\r\necho \"sonar.jdbc.url=jdbc:postgresql:\/\/${DB_HOSTNAME}:${DB_PORT}\/${DB_DATABASE_NAME}\" >> sonarqube\/conf\/sonar.properties\r\necho \"sonar.web.port=${SERVER_PORT}\" >> sonarqube\/conf\/sonar.properties\r\necho \"sonar.web.host=0.0.0.0\" >> sonarqube\/conf\/sonar.properties",
+            "container": "debian:bullseye",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "DB_USERNAME",
+            "description": "Username databse postgres",
+            "env_variable": "DB_USERNAME",
+            "default_value": "root",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        },
+        {
+            "name": "DB_PASSWORD",
+            "description": "DB_PASSWORD",
+            "env_variable": "DB_PASSWORD",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:200",
+            "field_type": "text"
+        },
+        {
+            "name": "DB_HOSTNAME",
+            "description": "DB_HOSTNAME",
+            "env_variable": "DB_HOSTNAME",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:200",
+            "field_type": "text"
+        },
+        {
+            "name": "DB_DATABASE_NAME",
+            "description": "DB_DATABASE_NAME",
+            "env_variable": "DB_DATABASE_NAME",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:200",
+            "field_type": "text"
+        },
+        {
+            "name": "DB_PORT",
+            "description": "DB_PORT",
+            "env_variable": "DB_PORT",
+            "default_value": "5432",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        }
+    ]
+}
