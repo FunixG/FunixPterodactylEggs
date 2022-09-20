@@ -1,0 +1,42 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2022-09-20T10:29:46+02:00",
+    "name": "Maven repository - Reposilite",
+    "author": "funixgaming7@gmail.com",
+    "description": "https:\/\/reposilite.com\/",
+    "features": null,
+    "docker_images": {
+        "funixg\/pterodactyl-java:17": "funixg\/pterodactyl-java:17"
+    },
+    "file_denylist": [],
+    "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar reposilite.jar --port {{SERVER_PORT}}",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"Done\"\r\n}",
+        "logs": "{}",
+        "stop": "stop"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# SonarQube Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n\r\necho -e \"installing dependencies\"\r\napt-get -y update\r\napt-get install -y wget\r\n\r\n## add user\r\necho -e \"adding container user\"\r\nuseradd -d \/home\/container -m container -s \/bin\/bash\r\n\r\n## own server to container user\r\nchown container: \/mnt\/server\/\r\n\r\ncd \/mnt\/server\r\n\r\nwget https:\/\/maven.reposilite.com\/releases\/com\/reposilite\/reposilite\/${APP_VERSION}\/reposilite-${APP_VERSION}-all.jar\r\nmv reposilite-*.jar reposilite.jar",
+            "container": "debian:bullseye",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "APP_VERSION",
+            "description": "Get it from https:\/\/github.com\/dzikoysk\/reposilite\/releases",
+            "env_variable": "APP_VERSION",
+            "default_value": "3.0.3",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        }
+    ]
+}
