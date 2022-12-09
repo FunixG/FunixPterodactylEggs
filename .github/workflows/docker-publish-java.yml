@@ -24,6 +24,6 @@ jobs:
 
       - name: Build the hello-docker Docker image
         run: |
-          docker build ./softwares/java/17 --tag ghcr.io/funixg/funix-pteroq-eggs/java:latest
-          docker push ghcr.io/funixg/funix-pteroq-eggs/java:latest
+          docker build ./softwares/java/17 --tag ghcr.io/funixg/java-pteroq:17
+          docker push ghcr.io/funixg/java-pteroq:17
 
