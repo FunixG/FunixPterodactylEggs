@@ -1,9 +1,13 @@
 name: DockerPublish - Java
 
 on:
+  schedule:
+    - cron: '24 21 * * *'
+    
   push:
-    branches:
-      - 'main'
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   docker-push-java:
