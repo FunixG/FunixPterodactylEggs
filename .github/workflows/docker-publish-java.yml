@@ -22,10 +22,8 @@ jobs:
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          context: ./softwares/java/17
-          push: true
-          tags: funixg/pterodactyl-java:17
-  
+      - name: Build the hello-docker Docker image
+        run: |
+          docker build ./softwares/java/17 --tag ghcr.io/${{ github.actor }}/pterodactyl-java:17
+          docker push ghcr.io/${{ github.actor }}/pterodactyl-java:17
+
