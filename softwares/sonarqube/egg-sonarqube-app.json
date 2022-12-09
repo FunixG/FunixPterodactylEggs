@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2022-09-18T15:03:54+02:00",
+    "exported_at": "2022-12-09T10:37:31+01:00",
     "name": "Sonarqube app",
     "author": "contact@funixgaming.fr",
     "description": "https:\/\/www.sonarqube.org\/",
@@ -13,7 +13,7 @@
         "funixg\/pterodactyl-java:17": "funixg\/pterodactyl-java:17"
     },
     "file_denylist": [],
-    "startup": ".\/sonarqube\/bin\/linux-x86-64\/sonar.sh console",
+    "startup": ".\/sonarqube-{{SONAR_VERSION}}\/bin\/linux-x86-64\/sonar.sh console",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"SonarQube is operational\"\r\n}",
@@ -22,10 +22,21 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/bash\r\n# SonarQube Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n\r\necho -e \"installing dependencies\"\r\napt-get -y update\r\napt-get install -y wget unzip\r\n\r\n## add user\r\necho -e \"adding container user\"\r\nuseradd -d \/home\/container -m container -s \/bin\/bash\r\n\r\n## own server to container user\r\nchown container: \/mnt\/server\/\r\n\r\ncd \/mnt\/server\r\n\r\nwget https:\/\/binaries.sonarsource.com\/Distribution\/sonarqube\/sonarqube-9.6.1.59531.zip && unzip sonarqube-*.zip\r\nmv sonarqube-*\/ sonarqube\r\nrm sonarqube-*.zip",
+            "script": "#!\/bin\/bash\r\n# SonarQube Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n\r\necho -e \"installing dependencies\"\r\napt-get -y update\r\napt-get install -y wget unzip\r\n\r\nmkdir \/mnt\/tmp\r\n\r\n#Download sonar version\r\necho -e \"Downloading sonarqube version ${SONAR_VERSION} ...\"\r\nwget https:\/\/binaries.sonarsource.com\/Distribution\/sonarqube\/sonarqube-${SONAR_VERSION}.zip && unzip sonarqube-*.zip\r\n\r\necho -e \"Moving new sonarqube files.\"\r\nmv sonarqube-*\/ \/mnt\/server\/\r\n\r\necho -e \"Removing sonarqube downloaded archive.\"\r\nrm sonarqube-*.zip\r\n\r\necho -e \"Done installation of Sonarqube ${SONAR_VERSION}\"",
             "container": "debian:bullseye",
             "entrypoint": "bash"
         }
     },
-    "variables": []
+    "variables": [
+        {
+            "name": "Sonar Version",
+            "description": "Sonarqube version, get it from : https:\/\/www.sonarqube.org\/downloads\/",
+            "env_variable": "SONAR_VERSION",
+            "default_value": "9.7.1.62043",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:300",
+            "field_type": "text"
+        }
+    ]
 }
