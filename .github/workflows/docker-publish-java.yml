@@ -24,6 +24,6 @@ jobs:
 
       - name: Build the hello-docker Docker image
         run: |
-          docker build ./softwares/java/17 --tag ghcr.io/${{ github.actor }}/pterodactyl-java:17
-          docker push ghcr.io/${{ github.actor }}/pterodactyl-java:17
+          docker build ./softwares/java/17 --tag ghcr.io/funixg/pterodactyl-java:17
+          docker push ghcr.io/funixg/pterodactyl-java:17
 
