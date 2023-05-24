@@ -9,6 +9,8 @@ RUN apt-get install build-essential -y
 ADD installdependencies.sh .
 RUN ./installdependencies.sh
 
+RUN apt-get install maven gradle -y
+
 USER container
 ENV USER=container HOME=/home/container
 
