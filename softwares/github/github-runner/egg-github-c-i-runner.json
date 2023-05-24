@@ -1,0 +1,92 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2023-05-24T16:41:08+02:00",
+    "name": "Github CI Runner",
+    "author": "contact@funixproductions.com",
+    "description": "A github self hosted ci runner. Usefull when you want to create your own runners for private projects on github enterprise.",
+    "features": null,
+    "docker_images": {
+        "FunixG GithubRunner": "docker.io\/funixg\/pteroq-github-ci-runner"
+    },
+    "file_denylist": [],
+    "startup": ".\/run.sh",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"Connected to GitHub\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# Github self hosted Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n\r\necho -e \"installing dependencies\"\r\napt-get -y update && apt-get -y upgrade\r\napt-get install build-essential curl -y\r\n\r\nmkdir actions-runner && cd actions-runner\r\ncurl -o actions-runner-linux-x64-2.304.0.tar.gz -L https:\/\/github.com\/actions\/runner\/releases\/download\/v2.304.0\/actions-runner-linux-x64-2.304.0.tar.gz\r\ntar xzf .\/actions-runner-linux-x64-2.304.0.tar.gz\r\nrm .\/actions-runner-linux-x64-2.304.0.tar.gz\r\nmv * \/mnt\/server\r\ncd \/mnt\/server\r\n\r\n.\/bin\/installdependencies.sh\r\nRUNNER_ALLOW_RUNASROOT=true .\/config.sh remove --token $GITHUB_RUNNER_TOKEN\r\nRUNNER_ALLOW_RUNASROOT=true .\/config.sh --replace --url $GITHUB_URL --token $GITHUB_RUNNER_TOKEN --name $GITHUB_RUNNER_NAME --runnergroup $GITHUB_RUNNER_GROUP --labels $GITHUB_RUNNER_LABELS --unattended",
+            "container": "debian:bullseye",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Github organisation or profile url",
+            "description": "This is the url of your organisation, like https:\/\/github.com\/PacifistaMC",
+            "env_variable": "GITHUB_URL",
+            "default_value": "https:\/\/github.com\/PacifistaMC",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:300",
+            "field_type": "text"
+        },
+        {
+            "name": "Github runner token",
+            "description": "Used to know where the runner will be used.",
+            "env_variable": "GITHUB_RUNNER_TOKEN",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:300",
+            "field_type": "text"
+        },
+        {
+            "name": "Runner name",
+            "description": "The runner name",
+            "env_variable": "GITHUB_RUNNER_NAME",
+            "default_value": "GithubSelfHost",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:300",
+            "field_type": "text"
+        },
+        {
+            "name": "Runner group",
+            "description": "Name of the runner group to add this runner to",
+            "env_variable": "GITHUB_RUNNER_GROUP",
+            "default_value": "default",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:300",
+            "field_type": "text"
+        },
+        {
+            "name": "Runner labels",
+            "description": "Extra labels in addition to the default: 'self-hosted,Linux,X64'",
+            "env_variable": "GITHUB_RUNNER_LABELS",
+            "default_value": "pterodactyl",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:300",
+            "field_type": "text"
+        },
+        {
+            "name": "GITHUB_ACTIONS_RUNNER_TLS_NO_VERIFY=1",
+            "description": "GITHUB_ACTIONS_RUNNER_TLS_NO_VERIFY=1",
+            "env_variable": "GITHUB_ACTIONS_RUNNER_TLS_NO_VERIFY",
+            "default_value": "1",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        }
+    ]
+}
